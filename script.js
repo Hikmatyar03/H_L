@@ -5,10 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgMusic = document.getElementById("bg-music");
   const leftLine = document.querySelector(".left-line");
   const rightLine = document.querySelector(".right-line");
+  const reasonBox = document.getElementById("reason-box");
+  const reasonInput = document.getElementById("reason-input");
+  const submitBtn = document.getElementById("submit-btn");
 
-  // Play music softly
-  bgMusic.volume = 0.3;
-  bgMusic.play().catch(e => console.log("Autoplay blocked:", e));
+  // Set music volume
+  bgMusic.volume = 0.25;
+
+  // Play music (handle autoplay)
+  bgMusic.play().catch(e => {
+    console.log("Autoplay blocked. Waiting for interaction...");
+    document.body.addEventListener("click", () => bgMusic.play(), { once: true });
+  });
 
   // Grow glowing lines
   setTimeout(() => {
@@ -16,40 +24,62 @@ document.addEventListener("DOMContentLoaded", () => {
     rightLine.classList.add("grow");
   }, 800);
 
-  // === SCENE 1: "Abey..." ===
+  // Scene 1: "Abey…"
   setTimeout(() => {
     sceneText.innerHTML = '<span class="abey">Abey…</span>';
     sceneText.classList.add("visible");
     laiba.classList.add("active");
-  }, 2500);
+  }, 3000);
 
-  // === SCENE 2: "My Bachaa" ===
+  // Scene 2: "My Bachaa…"
   setTimeout(() => {
     sceneText.innerHTML = 'My <span class="name">Bachaa</span>…\nI can feel something’s wrong.';
     sceneText.classList.remove("visible");
     setTimeout(() => sceneText.classList.add("visible"), 100);
-  }, 5000);
+  }, 6000);
 
-  // === SCENE 3: Cut to You ===
+  // Scene 3: Cut to You
   setTimeout(() => {
     laiba.classList.remove("active");
     you.classList.add("active");
     sceneText.innerHTML = 'It’s me, <span class="name">Hammo</span>.\nI’m here.';
-  }, 7500);
+  }, 9000);
 
-  // === SCENE 4: "Hat" ===
+  // Scene 4: "I won’t say Hat…"
   setTimeout(() => {
     sceneText.innerHTML = 'You know me…\nI never say <span class="hat">Hat</span>\nunless I mean it.';
-  }, 10000);
+  }, 12000);
 
-  // === SCENE 5: "Talk to me?" ===
+  // Scene 5: "Tujh bin guzara kaise hai?"
   setTimeout(() => {
     sceneText.innerHTML = 'I won’t say “Hat” now.\nJust… talk to me?\nI care too much to pretend.';
-  }, 13000);
+  }, 15000);
 
-  // === SCENE 6: Final Frame ===
+  // Scene 6: Final Frame + Show Input Box
   setTimeout(() => {
-    sceneText.innerHTML = 'You call me <span class="name">Hammo</span>.\nI call you <span class="name">My Bachaa</span>.\nThat’s our world.\nI’m not letting go.';
+    sceneText.innerHTML = 'You call me <span class="name">Hammo</span>.\nI call you <span class="name">My Bachaa</span>.\nOur world… still exists.\nI’m here ❤️';
     you.classList.add("active");
-  }, 16000);
+
+    // Show the romantic box
+    setTimeout(() => {
+      reasonBox.classList.add("visible");
+    }, 1500);
+  }, 18000);
+
+  // Submit Button
+  submitBtn.addEventListener("click", () => {
+    const message = reasonInput.value.trim();
+
+    if (!message) {
+      alert("💬 Just a word, Bachaa… I’m listening.");
+      return;
+    }
+
+    submitBtn.textContent = "Sent 💜";
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+      alert("Thank you, Bachaa… Hammo is listening.");
+    }, 1000);
+  });
 });
